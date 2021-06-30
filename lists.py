@@ -15,3 +15,11 @@ class Solution:
             else: 
                 head += 1
         return nums
+
+#剑指 Offer 39. 数组中出现次数超过一半的数字
+#my solution: O(nlogn)
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        return nums[len(nums) // 2]
+#摩尔投票
