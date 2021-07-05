@@ -90,3 +90,45 @@ def searchRange(self, nums: List[int], target: int) -> List[int]:
         return [firstEqual, firstLarger]
     else: 
         return [-1, -1]
+
+#69. x 的平方根
+"""
+实现 int sqrt(int x) 函数。
+
+计算并返回 x 的平方根，其中 x 是非负整数。
+
+由于返回类型是整数，结果只保留整数的部分，小数部分将被舍去。
+
+思路：跟上题一样，找出第一个mid*mid小于等于x的数
+"""
+def mySqrt(self, x: int) -> int:
+    left = 0 
+    right = x 
+    ans = x
+    while left <= right: 
+        mid = (left + right) >> 1 
+        if mid * mid <= x: 
+            left = mid + 1 
+            ans = mid 
+        else: 
+            right = mid - 1
+    return ans
+
+#367. 有效的完全平方数
+"""
+给定一个 正整数 num ，编写一个函数，如果 num 是一个完全平方数，则返回 true ，否则返回 false 。
+
+进阶：不要 使用任何内置的库函数，如  sqrt 。s
+"""
+def isPerfectSquare(self, num: int) -> bool:
+    left = 0 
+    right = num 
+    while left <= right: 
+        mid = (left + right) // 2
+        if mid * mid == num: 
+            return True
+        if mid * mid < num: 
+            left = mid + 1
+        if mid * mid > num: 
+            right = mid - 1
+    return False
