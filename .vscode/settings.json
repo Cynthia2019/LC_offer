@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "ios": "cpp"
+        "ios": "cpp",
+        "__hash_table": "cpp",
+        "unordered_map": "cpp"
     }
 }
