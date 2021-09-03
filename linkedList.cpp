@@ -127,3 +127,64 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
     head = dummyHead->next;
     return head;
 }
+
+
+//445. Add Two Numbers II
+class Solution {
+private:
+    ListNode* reverse(ListNode* l){
+        ListNode* prev = nullptr; 
+        ListNode* curr = l; 
+        while(curr){
+            ListNode* next = curr->next;
+            curr->next = prev; 
+            prev = curr;
+            curr = next; 
+        }
+        delete(curr);
+        return prev;
+    }
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* p1 = reverse(l1);
+        ListNode* p2 = reverse(l2); 
+        ListNode* ans = new ListNode(); 
+        ListNode* pointer = ans; 
+        int carrier = 0;
+        while(p1 != nullptr && p2 !=nullptr){
+            int val = p1->val + p2->val + carrier; 
+            if(val >= 10){
+                carrier = 1; 
+                val -= 10;
+            } else carrier = 0;
+            pointer->next = new ListNode(val); 
+            p1 = p1->next;
+            p2 = p2->next;
+            pointer = pointer->next;
+        }
+        while(p1 != nullptr){
+            int val = p1->val + carrier; 
+            if(val >= 10){
+                carrier = 1; 
+                val -= 10; 
+            } else carrier = 0;
+            p1 = p1->next; 
+            pointer->next = new ListNode(val); 
+            pointer = pointer->next;
+        }
+        while(p2 != nullptr){
+            int val = p2->val + carrier; 
+            if(val >= 10){
+                carrier = 1; 
+                val -= 10; 
+            } else carrier = 0;
+            p2 = p2->next; 
+            pointer->next = new ListNode(val); 
+            pointer = pointer->next;
+        }
+        if(carrier){
+            pointer->next = new ListNode(1);
+        }
+        return reverse(ans->next);
+    }
+};

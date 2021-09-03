@@ -7,7 +7,7 @@
 ***2找到当前最优解，3优化最优解，最后得到全局最优解
 """
 #3.Longest Substring Without Repeating Characters
-def lengthOfLongestSubstring(self, s: str) -> int:
+def lengthOfLongestSub(self, s: str) -> int:
     #滑动窗口
     left = 0 
     right = 0

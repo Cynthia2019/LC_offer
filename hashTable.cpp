@@ -141,3 +141,25 @@ int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vec
     }
     return ans;
 }
+
+//1487. Making File Names Unique
+vector<string> getFolderNames(vector<string>& names) {
+    unordered_map<string, int> map;
+    for(int i = 0; i < names.size(); i++){
+        string name = names[i];
+        if(map[name] > 0){
+            string newName = name + '(' + to_string(map[name]) + ')';
+            int count = map[name];
+            while(map[newName] != 0) {
+                newName = name + '(' + to_string(count) + ')';
+                count++;
+            }
+            map[name] = count; 
+            map[newName] = 1;
+            names[i] = newName;
+        } else {
+            map[name] = 1;
+        }    
+    }
+    return names;
+}
