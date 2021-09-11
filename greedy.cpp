@@ -29,3 +29,28 @@ public:
         return true;
     }
 };
+
+//406. Queue Reconstruction by Height
+//greedy: first arrange by height, then each person is guaranteed to have k people taller to be in front of. 
+//trick: use linked list (list) to reduce insertion time 
+class Solution {
+private: 
+    static bool cmp(vector<int>& a, vector<int>& b){
+        if(a[0] == b[0]) return a[1] < b[1];
+        return a[0] > b[0]; 
+    }
+public:
+    vector<vector<int>> reconstructQueue(vector<vector<int>>& people) {
+        sort(people.begin(), people.end(), cmp); 
+        list<vector<int>> ans; //list底层实现是linkedlist
+        for(int i = 0; i < people.size(); i++){
+            auto it = ans.begin(); 
+            int k = people[i][1];
+            while(k--){
+                it++; 
+            }
+            ans.insert(it, people[i]);
+        }
+        return vector<vector<int>>(ans.begin(), ans.end());
+    }
+};
