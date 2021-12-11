@@ -78,7 +78,7 @@ public:
 TreeNode* deleteNode(TreeNode* root, int key) {
     if(root == nullptr) return root; 
     if(root->val == key) {
-        if(root->left == nullptr && root->right == nullptr){
+        if (root->left == nullptr && root->right == nullptr){
             return nullptr; 
         }
         if(root->right != nullptr){
