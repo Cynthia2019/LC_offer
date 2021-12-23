@@ -67,3 +67,25 @@ public:
         return dp[weight] == weight;  
     }
 };
+
+
+//5. Longest Palindromic Substring
+//use dp to check for palindromic substring
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        vector<vector<bool>> dp(s.size(), vector<bool>(s.size(), true)); 
+        string ans; 
+        for(int i = s.size() - 1; i >= 0; i--){
+            for(int j = i; j < s.size(); j++){
+                if(i != j) {
+                    dp[i][j] = dp[i+1][j-1] && s[i] == s[j]; 
+                }
+                if(dp[i][j] && j - i + 1 > ans.size()){
+                    ans = s.substr(i, j - i + 1); 
+                }
+            }
+        }
+        return ans; 
+    }
+};
