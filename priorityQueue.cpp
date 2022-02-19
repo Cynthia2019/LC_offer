@@ -129,3 +129,45 @@ public:
         return dp[m][n];
     }
 };
+
+//1705 Maximum Number of Eaten Apples
+//greedy + prioirty queue
+//use a queue to maintain the smallest valid finished time 
+//greedy 思路: finish the apple with the smallest finished time first
+class Solution {
+private:
+    static bool cmp(vector<int>& a, vector<int>& b){
+        if(a[1] == b[1]) return a[0] > b[0];
+        return a[1] > b[1]; 
+    }
+public:
+    int eatenApples(vector<int>& apples, vector<int>& days) {
+        int ans = 0; 
+        priority_queue<vector<int>, vector<vector<int>>, decltype(&cmp)> q(cmp); 
+        for(int i = 0; i < apples.size(); i++){
+            if(apples[i]) q.push({apples[i], i+days[i]}); 
+            while(!q.empty() && (q.top()[1] <= i || q.top()[0] == 0)){
+                q.pop();
+            }
+            if(q.empty()) continue;
+            vector<int> choice = q.top(); 
+            q.pop(); 
+            choice[0]--; 
+            ans++; 
+            q.push(choice); 
+        }
+        int count = apples.size();
+        while(!q.empty()){
+            while(!q.empty() && (q.top()[1] <= count || q.top()[0] == 0)){
+                q.pop();
+            }
+            if(q.empty()) return ans; 
+            vector<int> choice = q.top(); q.pop(); 
+            ans++; 
+            choice[0]--;
+            q.push(choice); 
+            count++;
+        }
+        return ans;
+    }
+};

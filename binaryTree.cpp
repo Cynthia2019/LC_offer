@@ -300,3 +300,32 @@ TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
     return left;  
 }
 
+//lowestCommonAncestor 
+//思路：preorder traversal 整个tree，如果当前节点==q或者p，则不用再继续遍历下去，直接返回root
+//对于当前节点不是q p的node，分别向左和右子树遍历，记录结果为left right
+//如果left right都不是null，则说明在当前节点下左右分别有一个p一个q，则当前节点就是LCA
+//如果只有left或只有right，说明p在q或q在p的子树里，当前节点就是LCA
+//如果都是null，则p q都不在，返回null
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if(root == nullptr) return nullptr; 
+        if(root->val == p->val || root->val == q->val) return root; 
+        TreeNode* left = lowestCommonAncestor(root->left, p ,q);  
+        TreeNode* right = lowestCommonAncestor(root->right, p, q); 
+        if(left == nullptr && right == nullptr) return nullptr;
+        if(left == nullptr && right != nullptr) return right; 
+        if(left != nullptr && right == nullptr) return left; 
+        return root;  
+        
+    }
+};

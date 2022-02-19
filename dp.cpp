@@ -89,3 +89,46 @@ public:
         return ans; 
     }
 };
+
+//152. Maximum Product Subarray
+//需要分正负情况讨论，用dpMin记录负product的情况
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        vector<int> dpMax(nums.size(), 0); 
+        vector<int> dpMin(nums.size(), 0); 
+        dpMax[0] = nums[0]; 
+        dpMin[0] = nums[0]; 
+        for(int i = 1; i < nums.size(); i++){
+            dpMax[i] = max(max(dpMax[i-1] * nums[i], dpMin[i-1] * nums[i]),nums[i]);
+            dpMin[i] = min(min(dpMax[i-1] * nums[i], dpMin[i-1] * nums[i]),nums[i]); 
+        }
+        int ans = INT_MIN; 
+        for(int i : dpMax) ans = max(ans, i); 
+        return ans;
+    }
+};
+//64. min path sum 
+class Solution {
+
+public:
+    int minPathSum(vector<vector<int>>& grid) {
+        int m = grid.size(); 
+        int n = grid[0].size(); 
+        vector<vector<int>> dp(m, vector<int>(n, 0)); 
+        //dp[i][j] = min(dp[i-1][j], dp[i+1][j]) + grid[i][j], 
+        dp[0][0] = grid[0][0]; 
+        for(int i = 1; i < m; i++){
+            dp[i][0] = dp[i-1][0] + grid[i][0];
+        }
+        for(int j = 1; j < n; j++){
+            dp[0][j] = dp[0][j-1] + grid[0][j];
+        }
+        for(int i = 1; i < m; i++){
+            for(int j = 1; j < n; j++) {
+                dp[i][j] = min(dp[i-1][j], dp[i][j-1]) + grid[i][j]; 
+            }
+        }
+        return dp[m-1][n-1];
+    }
+};
