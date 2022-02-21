@@ -30,4 +30,3 @@ class Solution:
                 if dfs(board, i, j, 0, word, visited): 
                     return True
         return False
-
